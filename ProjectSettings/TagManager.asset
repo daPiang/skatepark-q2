@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - RedZone
+  - Button
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - UI
   - 
   - whatIsGround
-  - 
-  - 
+  - Player
+  - Interactables
   - 
   - 
   - 

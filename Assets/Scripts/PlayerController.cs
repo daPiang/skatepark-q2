@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FpsController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private float yaw=0.0f, pitch=0.0f;
     public Rigidbody rb;
@@ -10,6 +10,11 @@ public class FpsController : MonoBehaviour
     public Camera cam;
 
     public float speed = 0.0f, sens=2.0f, jump=5.0f;
+
+    public LayerMask playerLayer;
+
+    // Ray RayOrigin;
+    // RaycastHit HitInfo;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +26,26 @@ public class FpsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space) && Physics.Raycast(rb.transform.position, Vector3.down, 1 + 0.001f) && isMoving()) {
+        
+        isMoving();
+        isGrounded();
+        
+        if(Input.GetKey(KeyCode.Space) && isGrounded() && isMoving()) {
             rb.velocity = new Vector3(rb.velocity.x,jump, rb.velocity.y);
         }
         Look();
+
+
+        Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.yellow);
+        if(Input.GetKeyUp(KeyCode.E)) {
+            if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 2.5f, ~playerLayer)) {
+                Debug.Log("Hit!");
+                if(hit.transform.CompareTag("Button")) {
+                    Debug.Log("Button");
+                    hit.transform.SendMessage("useButton");
+                }
+            }
+        }
     }
 
     private bool isMoving() {
@@ -35,9 +56,16 @@ public class FpsController : MonoBehaviour
         }
     }
 
+    private bool isGrounded() {
+        if(Physics.Raycast(rb.transform.position, Vector3.down, 1 + 0.001f)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private void FixedUpdate() {
         Movement();
-        isMoving();
     }
 
     private void Look() {
