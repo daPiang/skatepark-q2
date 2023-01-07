@@ -209,9 +209,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 0
   inactiveMaterial: {fileID: 2100000, guid: 79f64ed6f5d6d374d91c3a0af4070258, type: 2}
-  activeMaterial: {fileID: 2100000, guid: 663834164c6a04740aaa1b778249ce7e, type: 2}
+  activeMaterial: {fileID: 2100000, guid: aeee7071bea0a4c478b4fea5933c5f79, type: 2}
   player: {fileID: 0}
   level: 
+  sfx: {fileID: 0}
 --- !u!1 &6847573657812643613
 GameObject:
   m_ObjectHideFlags: 0
