@@ -22,6 +22,10 @@ public class Portal : MonoBehaviour
         isActive = true;
     }
 
+    public void disablePortal() {
+        isActive = false;
+    }
+
     private void Update() {
         if(isActive) {
             this.GetComponent<MeshRenderer>().material = activeMaterial;

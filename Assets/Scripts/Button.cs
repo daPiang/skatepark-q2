@@ -6,15 +6,24 @@ public class Button : MonoBehaviour
     public GameObject levelmgr;
 
     public void useButton() {
-        animator.SetBool("buttonUsed", true);
-        if(levelmgr != null) {
-            levelmgr.GetComponent<LevelManager>().toggleSolved();
+        if(!animator.GetBool("buttonUsed")) {
+            FindObjectOfType<AudioManager>().Play("Button");
         }
+        
+        animator.SetBool("buttonUsed", true);
     }
 
     private void Update() {
-        if(animator.GetBool("buttonUsed")) {
-            Debug.Log("Button Pressed");
+        // if(animator.GetBool("buttonUsed")) {
+        //     Debug.Log("Button Pressed");
+        // }
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(gameObject.tag == "pressure") {
+            if(other.gameObject.tag == "Player") {
+                useButton();
+            }
         }
     }
 }

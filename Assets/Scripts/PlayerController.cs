@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask playerLayer;
 
+    private bool gameOver = false;
+
     // Ray RayOrigin;
     // RaycastHit HitInfo;
     // Start is called before the first frame update
@@ -26,25 +28,29 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        isMoving();
-        isGrounded();
-        
-        if(Input.GetKey(KeyCode.Space) && isGrounded() && isMoving()) {
-            rb.velocity = new Vector3(rb.velocity.x,jump, rb.velocity.y);
-        }
-        Look();
+        if(!gameOver) {
+
+            isMoving();
+            isGrounded();
+            Look();
+            
+            // if(Input.GetKey(KeyCode.Space) && isGrounded() && isMoving()) {
+            //     rb.velocity = new Vector3(rb.velocity.x,jump, rb.velocity.y);
+            // }
+            // Look();
 
 
-        Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.yellow);
-        if(Input.GetKeyUp(KeyCode.E)) {
-            if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 2.5f, ~playerLayer)) {
-                Debug.Log("Hit!");
-                if(hit.transform.CompareTag("Button")) {
-                    Debug.Log("Button");
-                    hit.transform.SendMessage("useButton");
+            // Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.yellow);
+            if(Input.GetKeyUp(KeyCode.E)) {
+                if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 2.5f, ~playerLayer)) {
+                    // Debug.Log("Hit!");
+                    if(hit.transform.CompareTag("Button")) {
+                        // Debug.Log("Button");
+                        hit.transform.SendMessage("useButton");
+                    }
                 }
             }
+
         }
     }
 
@@ -65,7 +71,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        Movement();
+        if(!gameOver) {
+            if(Input.GetKey(KeyCode.Space) && isGrounded() && isMoving()) {
+                rb.velocity = new Vector3(rb.velocity.x,jump, rb.velocity.y);
+            }
+            Movement(); 
+        }
     }
 
     private void Look() {
@@ -80,5 +91,10 @@ public class PlayerController : MonoBehaviour
         Vector3 fwd = new Vector3(-cam.transform.right.z, 0f, cam.transform.right.x);
         Vector3 wishDir = (fwd * axis.x + cam.transform.right * axis.y + Vector3.up * rb.velocity.y);
         rb.velocity = wishDir;
+    }
+
+    public void GameOver() {
+        gameOver = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

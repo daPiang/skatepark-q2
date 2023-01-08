@@ -9,8 +9,9 @@ public class RedZone : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Player") {
-            Debug.Log("Ouch!");
+            // Debug.Log("Ouch!");
             player.AddForce(0,force,0);
+            FindObjectOfType<AudioManager>().Play("Jump Pad");
         }
     }
 }

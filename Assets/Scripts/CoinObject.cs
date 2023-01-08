@@ -7,7 +7,6 @@ public class CoinObject : MonoBehaviour
     private void Update()
     {
         transform.Rotate(10.0f * rotationSpeed * Time.deltaTime, 0.0f, 0.0f);
-        // transform.
     }
 
     private void OnTriggerEnter(Collider other) {

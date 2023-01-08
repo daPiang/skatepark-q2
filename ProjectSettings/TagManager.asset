@@ -7,6 +7,7 @@ TagManager:
   - Coin
   - RedZone
   - Button
+  - pressure
   layers:
   - Default
   - TransparentFX
